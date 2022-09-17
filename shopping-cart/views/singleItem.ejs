@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://kit.fontawesome.com/379acff5c7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container flex justify-between-flex align-center">
+        <a href="/dashboard" class="logo">Shopping Cart</a>
+        <nav>
+          <ul class="flex align-center">
+            <li><a href="/">Home</a></li>
+            <%if(isAdmin !== "false"){ %>
+              <li><a href="/admin/addItem">add item</a></li>
+              <%}else{%>
+              <li><a href="/users/cartItems">Cart Items</a></li>
+              <%}%>
+            <li><a href="/logout">logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="padding details-hero">
+        <div class="container">
+          <h2 class="ternary-heading">Product name</h2>
+          <p><%= data.name %></p>
+          <br>
+          <div>
+            <h3 class="ternary-heading">Quantity Of Product</h3>
+            <p><%= data.quantity %></p>
+          </div>
+          <div>
+            <h3 class="ternary-heading">Price Of Product</h3>
+            <p><%= data.price %></p>
+          </div>
+          <div>
+            <p><%= data.likes.length %></p>
+            <%if(isAdmin === 'true'){%>
+              <span class="like"
+                ><i class="far fa-thumbs-up"></i
+              ></span>
+            <%}else{%>
+              <a href="/items/<%= data._id %>/likes" class="like"
+                ><i class="far fa-thumbs-up"></i
+              ></a>
+            <%}%>
+          </div>
+          <div>
+            <h3 class="ternary-heading">Seller Name</h3>
+            <p><%= data.adminId.name%></p>
+          </div>
+          <%if(isAdmin !== "false"){ %>
+            <a class="btn" href="/items/<%=data._id%>/edit">edit</a>
+            <a class="btn" href="/items/<%= data._id %>/delete">delete</a>
+            <%}else{ %>
+                <a class="btn" href="/items/<%= data._id %>/cart">Add to Cart</a>
+            <%} %>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
