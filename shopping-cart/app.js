@@ -5,8 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 var mongoose = require("mongoose");
-require("dotenv").config({path:'./.env'});
+if (process.env.NODE_ENV !== 'production') { 
+  require("dotenv").config({path:'./.env'});
+}
 var session = require("express-session");
+const cfg = require('./config.js');
 var MongoStore = require("connect-mongo");
 var flash = require("connect-flash");
 
@@ -45,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
   session({
-    secret: process.env.SECRET,
+    secret: cfg.secured_key,
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
