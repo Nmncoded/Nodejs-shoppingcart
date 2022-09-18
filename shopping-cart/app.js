@@ -8,6 +8,8 @@ var mongoose = require("mongoose");
 if (process.env.NODE_ENV !== 'production') { 
   require("dotenv").config({path:'./.env'});
 }
+const uri = process.env.MONGODB_URI;
+// console.log(uri);
 var session = require("express-session");
 const cfg = require('./config.js');
 var MongoStore = require("connect-mongo");
@@ -22,6 +24,7 @@ const auth = require('./middlewares/auth');
 
 mongoose.connect(
   "mongodb://127.0.0.1/shoppingCart",
+  // uri,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
     console.log(err ? err : "Connected to database");
