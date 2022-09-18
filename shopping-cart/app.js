@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') { 
+  require("dotenv").config({path:'./.env'});
+}
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -5,9 +8,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 var mongoose = require("mongoose");
-if (process.env.NODE_ENV !== 'production') { 
-  require("dotenv").config({path:'./.env'});
-}
 const uri = process.env.MONGODB_URI;
 // console.log(uri);
 var session = require("express-session");
@@ -23,8 +23,7 @@ var itemsRouter = require("./routes/item");
 const auth = require('./middlewares/auth');
 
 mongoose.connect(
-  "mongodb://127.0.0.1/shoppingCart",
-  // uri,
+  (  uri || "mongodb://127.0.0.1/shoppingCart" ) ,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
     console.log(err ? err : "Connected to database");
